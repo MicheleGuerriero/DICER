@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:DDSM="http://es.unizar.disco.dice/profiles/DDSM/1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://es.unizar.disco.dice/profiles/DDSM/1.0 http://es.unizar.disco.dice/profiles/DICE/1.0#//DDSM">
+  <uml:Model xmi:id="_LZgUcPenEeemZLWbrNCrEg" name="Posidonia">
+    <packagedElement xmi:type="uml:Device" xmi:id="_tSekkPeoEeemZLWbrNCrEg" name="rabbitmq_vm">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_vyj7sPeoEeemZLWbrNCrEg" name="rabbitmq">
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_w7cPUPeoEeemZLWbrNCrEg" name="installa-rabbitmq" fileName="scripts/install-rabbitmq.sh"/>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_2pCEQPeoEeemZLWbrNCrEg" name="cep_vm">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_3MCqsPeoEeemZLWbrNCrEg" name="cep">
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_5q9kMPeoEeemZLWbrNCrEg" name="bootstrap_cep" fileName="scripts/bootstrap_cep.sh"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_7JTxgPeoEeemZLWbrNCrEg" name="prerequisites" fileName="scripts/prerequisites.sh"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_9nBKEPeoEeemZLWbrNCrEg" name="install-cep" fileName="scripts/install-cep.sh"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="__YuYQPeoEeemZLWbrNCrEg" name="common" fileName="scripts/common.sh"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_ByH4kPepEeemZLWbrNCrEg" name="ipoms-cep" fileName="scripts/ipoms-cep"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_D9bSgPepEeemZLWbrNCrEg" name="ipoms-cep-noatum-vlc" fileName="scripts/ipoms-cep-noatum-vlc"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_GzVvsPepEeemZLWbrNCrEg" name="cep-lsf" fileName="scripts/cep-lsf.json"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_Jg2e0PepEeemZLWbrNCrEg" name="install-cep-monitor" fileName="scripts/install-cep-monitor.sh"/>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_R_QOgPepEeemZLWbrNCrEg" client="_3MCqsPeoEeemZLWbrNCrEg" supplier="_vyj7sPeoEeemZLWbrNCrEg"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_V2dJkPepEeemZLWbrNCrEg" client="_Ub7sUPepEeemZLWbrNCrEg" supplier="_Ti39YPepEeemZLWbrNCrEg"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_X2crYPepEeemZLWbrNCrEg" client="_Ti39YPepEeemZLWbrNCrEg" supplier="_vyj7sPeoEeemZLWbrNCrEg"/>
+    <packagedElement xmi:type="uml:Device" xmi:id="_8NYBIPepEeemZLWbrNCrEg" name="docker_host">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_Ub7sUPepEeemZLWbrNCrEg" name="simu"/>
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_Ti39YPepEeemZLWbrNCrEg" name="ais"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_kYl9UPepEeemZLWbrNCrEg">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_kYoZkPepEeemZLWbrNCrEg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://es.unizar.disco.dice/profiles/DICE/1.0#//DDSM"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://DICE_PROFILES/DICE.profile.uml#_aYmS0Dx2EeaOH59TuV453g"/>
+    </profileApplication>
+  </uml:Model>
+  <DDSM:DdsmVMsCluster xmi:id="_mqSTIPepEeemZLWbrNCrEg" base_Device="_tSekkPeoEeemZLWbrNCrEg" genericSize="Medium"/>
+  <DDSM:DdsmVMsCluster xmi:id="_okWzIPepEeemZLWbrNCrEg" base_Device="_2pCEQPeoEeemZLWbrNCrEg" genericSize="Medium"/>
+  <DDSM:DdsmInternalComponent xmi:id="_qCuOkPepEeemZLWbrNCrEg" base_Node="_3MCqsPeoEeemZLWbrNCrEg" launch_script="scripts/run-install-cep.sh"/>
+  <DDSM:DdsmInternalComponent xmi:id="_ra7XoPepEeemZLWbrNCrEg" base_Node="_vyj7sPeoEeemZLWbrNCrEg" protected="true" launch_script="scripts/run-install-rabbitmq.sh"/>
+  <DDSM:DdsmExternalComponent xmi:id="_CTVSwPeqEeemZLWbrNCrEg" location="tcp://10.50.51.17:2375" base_Device="_8NYBIPepEeemZLWbrNCrEg"/>
+  <DDSM:DdsmDockerHost xmi:id="_CVhEEPeqEeemZLWbrNCrEg" base_Node="_8NYBIPepEeemZLWbrNCrEg"/>
+  <DDSM:DdsmDockerContainer xmi:id="_EKSNUPeqEeemZLWbrNCrEg" base_Node="_Ub7sUPepEeemZLWbrNCrEg" image="localhost:32768/simu" tag="latest" network="posidoniadefault"/>
+  <DDSM:DdsmDockerContainer xmi:id="_FQIbEPeqEeemZLWbrNCrEg" base_Node="_Ti39YPepEeemZLWbrNCrEg" image="localhost:32768/ais" tag="latest" network="posidoniadefault"/>
+</xmi:XMI>

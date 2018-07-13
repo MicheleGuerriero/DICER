@@ -1,0 +1,179 @@
+tosca_definitions_version: cloudify_dsl_1_3
+imports: ['https://github.com/dice-project/DICE-Deployment-Cloudify/releases/download/0.8.0/full.yaml']
+outputs:
+  spark_ip_output:
+    value:
+      concat:
+      - http://
+      - get_attribute: [spark_master_vm_ip, address]
+      - :8080
+node_templates:
+  zookeeper_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: zookeeper_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: zookeeper_vm_ip}
+    properties: {platform: openstack}
+  kafka_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: kafka_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: kafka_vm_ip}
+    properties: {platform: openstack}
+  cassandra_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: cassandra_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: cassandra_vm_ip}
+    properties: {platform: openstack}
+  docker_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: fw_ephemeral}
+    - {type: dice.relationships.ProtectedBy, target: docker_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: docker_vm_ip}
+    properties: {platform: openstack}
+  docker_vm_ip:
+    type: dice.VirtualIP
+    properties: {}
+  cassandra:
+    type: dice.components.cassandra.Worker
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: cassandra_vm}
+    - {type: dice.relationships.cassandra.ConnectedToSeed, target: cassandra_seed}
+    properties:
+      monitoring: {enabled: false}
+  cassandra_seed:
+    type: dice.components.cassandra.Seed
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: cassandra_seed_vm}
+    properties: {}
+  cassandra_firewall:
+    type: dice.firewall_rules.cassandra.Common
+    properties: {}
+  cassandra_seed_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: cassandra_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: cassandra_seed_vm_ip}
+    properties: {}
+  zookeeper:
+    type: dice.components.zookeeper.Server
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: zookeeper_vm}
+    - {type: dice.relationships.zookeeper.MemberOfQuorum, target: zookeeper_quorum}
+    properties:
+      monitoring: {enabled: false}
+      configuration: {tickTime: '1500', syncLimit: '10', initLimit: '5'}
+  zookeeper_firewall:
+    type: dice.firewall_rules.zookeeper.Server
+    properties: {}
+  zookeeper_quorum:
+    type: dice.components.zookeeper.Quorum
+    relationships:
+    - {type: dice.relationships.zookeeper.QuorumContains, target: zookeeper_vm}
+    properties: {}
+  kafka:
+    type: dice.components.kafka.Broker
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: kafka_vm}
+    - {type: dice.relationships.zookeeper.ConnectedToZookeeperQuorum, target: zookeeper_quorum}
+    properties:
+      monitoring: {enabled: false}
+  kafka_firewall:
+    type: dice.firewall_rules.kafka.Broker
+    properties: {}
+  spark_master:
+    type: dice.components.spark.Master
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: spark_master_vm}
+    properties:
+      monitoring: {enabled: true}
+  spark_master_firewall:
+    type: dice.firewall_rules.spark.Master
+    properties: {}
+  spark_master_vm:
+    type: dice.hosts.ubuntu.Small
+    instances: {deploy: 1}
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: spark_master_firewall}
+    - {type: dice.relationships.IPAvailableFrom, target: spark_master_vm_ip}
+    properties: {}
+  spark_master_vm_ip:
+    type: dice.VirtualIP
+    properties: {}
+  spark_jobs:
+    type: dice.components.misc.ScriptRunner
+    relationships:
+    - {type: dice.relationships.Needs, target: cassandra_keyspaces}
+    - {type: dice.relationships.Needs, target: osv_spark_worker}
+    - {type: dice.relationships.ContainedIn, target: spark_vm}
+    properties:
+      monitoring: {enabled: true}
+      resources: [resources/Traffic-assembly-0.0.1.jar]
+      arguments:
+      - get_attribute: [cassandra, fqdn]
+      script: scripts/install-spark-jobs.sh
+      language: bash
+  cassandra_keyspaces:
+    type: dice.components.misc.ScriptRunner
+    relationships:
+    - {type: dice.relationships.Needs, target: cassandra}
+    - {type: dice.relationships.ContainedIn, target: cassandra_vm}
+    properties:
+      monitoring: {enabled: false}
+      resources: [scripts/tables.cql, resources/demo-data.tar.gz]
+      script: scripts/setup-cassandra-keyspaces.sh
+      language: bash
+  docker:
+    type: dice.components.docker.Server
+    relationships:
+    - {type: dice.relationships.ContainedIn, target: docker_vm}
+    properties: {}
+  docker_firewall:
+    type: dice.firewall_rules.docker.Server
+    properties: {}
+  cassandra-ui:
+    type: dice.components.docker.Container
+    relationships:
+    - {type: dice.relationships.docker.HostedOn, target: docker}
+    - {type: dice.relationships.Needs, target: cassandra}
+    properties:
+      monitoring: {enabled: false}
+      port_mapping: {3000/tcp: '0'}
+      environment:
+        CASSANDRA_HOST:
+          get_attribute: [cassandra, ip]
+      image: tadeboro/cassandraui
+      tag: latest
+  osv_spark_worker:
+    type: dice.components.osv.Application.Small
+    relationships:
+    - {type: dice.relationships.ProtectedBy, target: fw_ephemeral}
+    - {type: dice.relationships.ProtectedBy, target: spark_firewall}
+    - {type: dice.relationships.Needs, target: spark}
+    properties:
+      monitoring: {enabled: true}
+      image: resources/dice-spark.qemu
+      user_data: |-
+        concat:
+          - "run:\n"
+          - "  - POST: /env/MASTER\n"
+          - "    val: "
+          - get_attribute: [ spark_master, ip ]
+          - ":7077\n"
+          - "  - PUT: /app/\n"
+          - "    command: runscript /run/worker\n"
+          - "  - PUT: /app/\n"
+          - "    command: /bin/template.so /dice.metrics.template /conf/metrics.properties\n"
+  fw_ephemeral:
+    type: dice.firewall_rules.Base
+    properties:
+      rules:
+      - {protocol: tcp, ip_prefix: 0.0.0.0/0, to_port: 61000, from_port: 32768}
+

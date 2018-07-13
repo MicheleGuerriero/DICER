@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Complex_Data_Types="http://es.unizar.disco.dice/libraries/Complex_Data_Types/1.0" xmlns:DDSM="http://es.unizar.disco.dice/profiles/DDSM/1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://es.unizar.disco.dice/profiles/DDSM/1.0 http://es.unizar.disco.dice/profiles/DICE/1.0#//DDSM">
+  <uml:Model xmi:id="_UWXQoAYfEei16bQf_m29-Q" name="SparkXLAB">
+    <packagedElement xmi:type="uml:Device" xmi:id="_Z02SkAYfEei16bQf_m29-Q" name="zookeeper_vm">
+      <nestedNode xmi:type="uml:Node" xmi:id="_FgXLEAYyEeieU-Fb7M9moQ" name="zookeeper"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_eI8lAAYfEei16bQf_m29-Q" name="kafka_vm">
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_GPtWoAYtEeieU-Fb7M9moQ" name="kafka"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_l0RR8AYfEei16bQf_m29-Q" name="spark_vm">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_pu-zIAv1Eeidp4rzQkeMtg" name="spark_jobs">
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_sYImsAv1Eeidp4rzQkeMtg" name="Traffic-assembly" fileName="resources/Traffic-assembly-0.0.1.jar"/>
+      </nestedClassifier>
+      <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_PaqRAAYyEeieU-Fb7M9moQ" name="spark"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_seAmEAYfEei16bQf_m29-Q" name="cassandra_vm">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_0-eyUAYfEei16bQf_m29-Q" name="cassandra_keyspaces">
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_DBKC4AYgEei16bQf_m29-Q" name="tables" fileName="scripts/tables.cql"/>
+        <nestedClassifier xmi:type="uml:Artifact" xmi:id="_PK9CABpzEeiEIc4zDDk3Og" name="demo-data" fileName="resources/demo-data.tar.gz"/>
+      </nestedClassifier>
+      <nestedNode xmi:type="uml:Node" xmi:id="_mauTUAYyEeieU-Fb7M9moQ" name="cassandra"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Device" xmi:id="_Qgf84AYgEei16bQf_m29-Q" name="osv_spark_worker"/>
+    <packagedElement xmi:type="uml:Device" xmi:id="_fBorEAYgEei16bQf_m29-Q" name="docker_vm">
+      <nestedClassifier xmi:type="uml:Node" xmi:id="_o21OkAYgEei16bQf_m29-Q" name="docker">
+        <nestedNode xmi:type="uml:Node" xmi:id="_prWbwAYgEei16bQf_m29-Q" name="cassandra-ui"/>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_QyBFgAYyEeieU-Fb7M9moQ" client="_Qgf84AYgEei16bQf_m29-Q" supplier="_PaqRAAYyEeieU-Fb7M9moQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_qmZCgAYyEeieU-Fb7M9moQ" client="_0-eyUAYfEei16bQf_m29-Q" supplier="_mauTUAYyEeieU-Fb7M9moQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_rKlUsAYyEeieU-Fb7M9moQ" client="_prWbwAYgEei16bQf_m29-Q" supplier="_mauTUAYyEeieU-Fb7M9moQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_yOdAEAYyEeieU-Fb7M9moQ" client="_GPtWoAYtEeieU-Fb7M9moQ" supplier="_FgXLEAYyEeieU-Fb7M9moQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_6zT20Av1Eeidp4rzQkeMtg" client="_pu-zIAv1Eeidp4rzQkeMtg" supplier="_0-eyUAYfEei16bQf_m29-Q"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_KCnSkAv2Eeidp4rzQkeMtg" client="_pu-zIAv1Eeidp4rzQkeMtg" supplier="_Qgf84AYgEei16bQf_m29-Q"/>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_WJHnsAYfEei16bQf_m29-Q">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WJKD8AYfEei16bQf_m29-Q" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://es.unizar.disco.dice/profiles/DICE/1.0#//DDSM"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://DICE_PROFILES/DICE.profile.uml#_aYmS0Dx2EeaOH59TuV453g"/>
+    </profileApplication>
+  </uml:Model>
+  <DDSM:DdsmVMsCluster xmi:id="_yoO3MAYgEei16bQf_m29-Q" provider="openstack" base_Device="_Z02SkAYfEei16bQf_m29-Q"/>
+  <DDSM:DdsmVMsCluster xmi:id="_4Ku2cAYgEei16bQf_m29-Q" provider="openstack" base_Device="_l0RR8AYfEei16bQf_m29-Q" instances="0"/>
+  <DDSM:DdsmOSvContainer xmi:id="_7fqK4AYgEei16bQf_m29-Q" monitored="true" provider="openstack" base_Device="_Qgf84AYgEei16bQf_m29-Q" imageId="resources/dice-spark.qemu" instances="2" base_Node="_Qgf84AYgEei16bQf_m29-Q" protected="true" user_data="concat:&#xA;  - &quot;run:\n&quot;&#xA;  - &quot;  - POST: /env/MASTER\n&quot;&#xA;  - &quot;    val: &quot;&#xA;  - get_attribute: [ spark_master, ip ]&#xA;  - &quot;:7077\n&quot;&#xA;  - &quot;  - PUT: /app/\n&quot;&#xA;  - &quot;    command: runscript /run/worker\n&quot;&#xA;  - &quot;  - PUT: /app/\n&quot;&#xA;  - &quot;    command: /bin/template.so /dice.metrics.template /conf/metrics.properties\n&quot;"/>
+  <DDSM:DdsmVMsCluster xmi:id="_82QxcAYgEei16bQf_m29-Q" provider="openstack" base_Device="_fBorEAYgEei16bQf_m29-Q"/>
+  <DDSM:DdsmDockerHost xmi:id="___UNEAYgEei16bQf_m29-Q" base_Node="_o21OkAYgEei16bQf_m29-Q" protected="true"/>
+  <DDSM:DdsmDockerContainer xmi:id="_BlSsYAYhEei16bQf_m29-Q" base_Node="_prWbwAYgEei16bQf_m29-Q" image="tadeboro/cassandraui" tag="latest">
+    <portMappings xmi:type="Complex_Data_Types:PortMapping" xmi:id="_DoA8oAYiEei16bQf_m29-Q" inPort="3000"/>
+    <envVariables xmi:type="Complex_Data_Types:EnvironmentVariable" xmi:id="_rz7YIBp0EeiEIc4zDDk3Og" variableName="CASSANDRA_HOST">
+      <variableDefinition xmi:type="Complex_Data_Types:RequiredAttribute" xmi:id="_sd_BwBp0EeiEIc4zDDk3Og" referenceNode="cassandra" attributeName="ip"/>
+    </envVariables>
+  </DDSM:DdsmDockerContainer>
+  <DDSM:DdsmVMsCluster xmi:id="_FBaN8AYhEei16bQf_m29-Q" provider="openstack" base_Device="_seAmEAYfEei16bQf_m29-Q"/>
+  <DDSM:DdsmInternalComponent xmi:id="_GCAIQAYhEei16bQf_m29-Q" base_Node="_0-eyUAYfEei16bQf_m29-Q" launch_script="scripts/setup-cassandra-keyspaces.sh"/>
+  <DDSM:DdsmVMsCluster xmi:id="_VRVZMAYhEei16bQf_m29-Q" provider="openstack" base_Device="_eI8lAAYfEei16bQf_m29-Q"/>
+  <DDSM:DdsmKafkaCluster xmi:id="_JbzfMAYtEeieU-Fb7M9moQ" base_Node="_GPtWoAYtEeieU-Fb7M9moQ" protected="true" base_ExecutionEnvironment="_GPtWoAYtEeieU-Fb7M9moQ"/>
+  <DDSM:DdsmZookeeperCluster xmi:id="_LM-voAYyEeieU-Fb7M9moQ" base_Node="_FgXLEAYyEeieU-Fb7M9moQ" protected="true"/>
+  <DDSM:DdsmSparkCluster xmi:id="_S9RcIAYyEeieU-Fb7M9moQ" monitored="true" base_Node="_PaqRAAYyEeieU-Fb7M9moQ" protected="true"/>
+  <DDSM:DdsmCassandraCluster xmi:id="_n_9y0AYyEeieU-Fb7M9moQ" base_Node="_mauTUAYyEeieU-Fb7M9moQ" protected="true" memtable_flush_writers="4"/>
+  <DDSM:DdsmInternalComponent xmi:id="_vyDI0Av1Eeidp4rzQkeMtg" monitored="true" base_Node="_pu-zIAv1Eeidp4rzQkeMtg" launch_script="scripts/install-spark-jobs.sh">
+    <requiredAttributes xmi:type="Complex_Data_Types:RequiredAttribute" xmi:id="_zsiocAv1Eeidp4rzQkeMtg" referenceNode="cassandra" attributeName="fqdn"/>
+  </DDSM:DdsmInternalComponent>
+</xmi:XMI>

@@ -13,7 +13,7 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_hqKuU9FAEeeD7O_PctsUvg"/>
             </children>
             <element xmi:type="uml:Node" href="container.uml#_hqGc4NFAEeeD7O_PctsUvg"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_hqKHQdFAEeeD7O_PctsUvg" x="30" y="20" width="142" height="78"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_hqKHQdFAEeeD7O_PctsUvg" x="30" y="20" width="168" height="78"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_xWQMsNFAEeeD7O_PctsUvg" type="StereotypeComment">
             <styles xmi:type="notation:TitleStyle" xmi:id="_xWQMsdFAEeeD7O_PctsUvg"/>
@@ -27,7 +27,7 @@
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_g30EUtFAEeeD7O_PctsUvg"/>
         </children>
         <element xmi:type="uml:Node" href="container.uml#_g3vL0NFAEeeD7O_PctsUvg"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_g3y2MdFAEeeD7O_PctsUvg" x="24" y="8" width="214" height="197"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_g3y2MdFAEeeD7O_PctsUvg" x="24" y="8" width="243" height="197"/>
       </children>
       <children xmi:type="notation:Shape" xmi:id="_wC9_4NFAEeeD7O_PctsUvg" type="StereotypeComment">
         <styles xmi:type="notation:TitleStyle" xmi:id="_wC9_4dFAEeeD7O_PctsUvg"/>
@@ -41,7 +41,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eJKswtFAEeeD7O_PctsUvg"/>
     </children>
     <element xmi:type="uml:Device" href="container.uml#_eIQGwNFAEeeD7O_PctsUvg"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eIxEIdFAEeeD7O_PctsUvg" x="49" y="42" width="282" height="279"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_eIxEIdFAEeeD7O_PctsUvg" x="49" y="42" width="312" height="319"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_euvfANFAEeeD7O_PctsUvg" type="Device_Shape">
     <children xmi:type="notation:DecorationNode" xmi:id="_euwGENFAEeeD7O_PctsUvg" type="Device_NameLabel"/>
@@ -49,7 +49,7 @@
       <children xmi:type="notation:Shape" xmi:id="_oLVVQNFAEeeD7O_PctsUvg" type="Node_Shape_CCN">
         <children xmi:type="notation:DecorationNode" xmi:id="_oLV8UNFAEeeD7O_PctsUvg" type="Node_NameLabel_CCN"/>
         <element xmi:type="uml:Node" href="container.uml#_oLJIANFAEeeD7O_PctsUvg"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oLVVQdFAEeeD7O_PctsUvg" x="40" y="11"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_oLVVQdFAEeeD7O_PctsUvg" x="15" y="17" width="175"/>
       </children>
       <children xmi:type="notation:Shape" xmi:id="_0wA90NFAEeeD7O_PctsUvg" type="StereotypeComment">
         <styles xmi:type="notation:TitleStyle" xmi:id="_0wA90dFAEeeD7O_PctsUvg"/>
@@ -63,7 +63,7 @@
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_euwGE9FAEeeD7O_PctsUvg"/>
     </children>
     <element xmi:type="uml:Device" href="container.uml#_euoKQNFAEeeD7O_PctsUvg"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_euvfAdFAEeeD7O_PctsUvg" x="500" y="52" width="250" height="238"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_euvfAdFAEeeD7O_PctsUvg" x="500" y="52" width="250" height="269"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_urxjcNFAEeeD7O_PctsUvg" type="StereotypeComment">
     <styles xmi:type="notation:TitleStyle" xmi:id="_urxjcdFAEeeD7O_PctsUvg"/>
